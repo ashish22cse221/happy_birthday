@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday, Mom!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #ff69b4;
+            --secondary-color: #ff9ff3;
+            --background-color: #f6e5f5;
+            --text-color: #4a4a4a;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            transition: background-color 2s ease;
+        }
+        .container {
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 600px;
+            width: 90%;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            color: var(--primary-color);
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            animation: titleAnimation 2s ease-in-out infinite alternate;
+        }
+        @keyframes titleAnimation {
+            from { transform: scale(1); }
+            to { transform: scale(1.05); }
+        }
+        #countdown {
+            font-size: 2rem;
+            color: var(--text-color);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        #countdown:hover {
+            color: var(--primary-color);
+        }
+        #birthdayWish {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            display: none;
+            margin-bottom: 1.5rem;
+            animation: fadeIn 2s, floatAnimation 3s ease-in-out infinite;
+        }
+        @keyframes floatAnimation {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        #momImage {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 1.5rem auto;
+            display: block;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            border: 5px solid white;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        #momImage:hover {
+            transform: scale(1.05) rotate(5deg);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.3);
+        }
+        .message {
+            font-size: 1.1rem;
+            color: var(--text-color);
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+            display: none;
+            animation: fadeIn 2s;
+            transition: transform 0.3s ease;
+        }
+        .message:hover {
+            transform: scale(1.02);
+        }
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: var(--secondary-color);
+            animation: confetti 5s ease-in-out infinite;
+        }
+        @keyframes confetti {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(100vh) rotate(720deg); }
+        }
+        .heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: var(--primary-color);
+            transform: rotate(45deg);
+            animation: heartbeat 1s infinite;
+            display: none;
+        }
+        .heart::before,
+        .heart::after {
+            content: '';
+            width: 20px;
+            height: 20px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            position: absolute;
+        }
+        .heart::before {
+            left: -10px;
+        }
+        .heart::after {
+            top: -10px;
+        }
+        @keyframes heartbeat {
+            0% { transform: scale(1) rotate(45deg); }
+            50% { transform: scale(1.2) rotate(45deg); }
+            100% { transform: scale(1) rotate(45deg); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="title">Mom's Birthday Countdown</h1>
+        <div id="countdown"></div>
+        <div id="birthdayWish">Wishing You a Fantastic Day!</div>
+        <img id="momImage" src="mom2.jpg" alt="Mom's Image">
+        <p class="message">
+            Dear Mom,<br><br>
+            On this special day, we want to celebrate you and all the love and joy you bring to our lives. 
+            Your kindness, strength, and wisdom inspire us every day. 
+            May this year bring you happiness, success, and countless beautiful moments.<br><br>
+            We love you!
+        </p>
+    </div>
+
+    <audio id="birthdaySong" src="https://example.com/birthday-song.mp3"></audio>
+
+    <script>
+        const countdownElement = document.getElementById('countdown');
+        const birthdayWishElement = document.getElementById('birthdayWish');
+        const titleElement = document.getElementById('title');
+        const messageElement = document.querySelector('.message');
+        const birthdaySong = document.getElementById('birthdaySong');
+        const momImage = document.getElementById('momImage');
+
+        function updateCountdown() {
+            const now = new Date();
+            const birthday = new Date(now.getFullYear(), 8, 16); // September is month 8 (0-indexed)
+            birthday.setHours(0, 0, 0, 0);
+
+            if (now > birthday) {
+                birthday.setFullYear(birthday.getFullYear() + 1);
+            }
+
+            const diff = birthday - now;
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            countdownElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+            if (diff <= 0) {
+                clearInterval(countdownInterval);
+                startCelebration();
+            }
+        }
+
+        function startCelebration() {
+            document.body.style.backgroundColor = '#ffd1dc';
+            countdownElement.style.display = 'none';
+            birthdayWishElement.style.display = 'block';
+            titleElement.textContent = 'Happy Birthday, Mom!';
+            messageElement.style.display = 'block';
+            birthdaySong.play();
+            createConfetti();
+            createHearts();
+            momImage.style.animation = 'pulse 2s infinite';
+        }
+
+        function createConfetti() {
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.animationDuration = Math.random() * 3 + 2 + 's';
+                confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                document.body.appendChild(confetti);
+            }
+        }
+
+        function createHearts() {
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.top = Math.random() * 100 + 'vh';
+                heart.style.animationDelay = Math.random() * 2 + 's';
+                document.body.appendChild(heart);
+            }
+        }
+
+        const countdownInterval = setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // Check if it's already past the birthday
+        const now = new Date();
+        const birthday = new Date(now.getFullYear(), 8, 16); // September is month 8 (0-indexed)
+        birthday.setHours(0, 0, 0, 0);
+
+        if (now >= birthday) {
+            clearInterval(countdownInterval);
+            startCelebration();
+        }
+
+        // Add hover effect to mom's image
+        momImage.addEventListener('mouseover', () => {
+            momImage.style.transform = 'scale(1.1) rotate(5deg)';
+        });
+        momImage.addEventListener('mouseout', () => {
+            momImage.style.transform = 'scale(1) rotate(0deg)';
+        });
+
+        // Add a pulsing animation to the countdown
+        setInterval(() => {
+            countdownElement.style.transform = 'scale(1.05)';
+            setTimeout(() => {
+                countdownElement.style.transform = 'scale(1)';
+            }, 500);
+        }, 2000);
+    </script>
+</body>
+</html>
