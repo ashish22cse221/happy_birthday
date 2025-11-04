@@ -55,7 +55,6 @@
       100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
     }
 
-    /* Gentle hover floating animation */
     @keyframes hoverFloat {
       0% { transform: translate(-50%, -50%) scale(1); }
       50% { transform: translate(-50%, -52%) scale(1.03); }
@@ -84,33 +83,82 @@
       100% { transform: translateY(110vh); opacity: 0; }
     }
 
+    /* Music Button */
+    .music-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 50px;
+      height: 50px;
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      z-index: 5;
+      box-shadow: 0 0 12px rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(5px);
+      transition: transform 0.3s ease, background 0.3s ease;
+    }
+
+    .music-btn:hover {
+      transform: scale(1.1);
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    .music-btn span {
+      font-size: 1.6rem;
+      color: #ff6fa8;
+      user-select: none;
+    }
+
     @media (max-width: 768px) {
       .center-image { max-width: 80vw; }
       .floating-message { font-size: 1.5rem; }
+      .music-btn { width: 45px; height: 45px; }
     }
 
     @media (max-width: 480px) {
       .center-image { max-width: 90vw; }
       .floating-message { font-size: 1.2rem; }
+      .music-btn { width: 40px; height: 40px; }
     }
   </style>
 </head>
 <body>
-  <!-- Hidden YouTube Audio Embed -->
-  <iframe width="0" height="0"
-    src="https://www.youtube.com/embed/cWAXEo6mniI?autoplay=1&loop=1&playlist=cWAXEo6mniI"
-    frameborder="0"
-    allow="autoplay"
-    allowfullscreen>
-  </iframe>
-
   <!-- Main Image -->
   <img src="img1.png" alt="Center Image" class="center-image" id="mainImage">
 
+  <!-- Music Control Button -->
+  <div class="music-btn" id="musicBtn">
+    <span>🎵</span>
+  </div>
+
+  <!-- Background Music -->
+  <audio id="bgMusic" src="public/song.mp3" preload="auto" loop></audio>
+
   <script>
     window.addEventListener('load', () => {
+      const music = document.getElementById('bgMusic');
       const image = document.getElementById('mainImage');
       const body = document.body;
+      const musicBtn = document.getElementById('musicBtn');
+      let isPlaying = false;
+
+      // Music Button Toggle
+      musicBtn.addEventListener('click', () => {
+        if (isPlaying) {
+          music.pause();
+          musicBtn.innerHTML = "<span>🔇</span>";
+          isPlaying = false;
+        } else {
+          music.play().then(() => {
+            musicBtn.innerHTML = "<span>🎶</span>";
+            isPlaying = true;
+          }).catch(err => console.log("Autoplay blocked:", err));
+        }
+      });
 
       // Cute messages
       const messages = [
@@ -122,7 +170,6 @@
         "Hugs and kisses 💋", "You make me blush 🌺", "My favorite human 💞"
       ];
 
-      // Spawn waterfall messages
       function spawnMessage() {
         const msg = document.createElement('div');
         msg.className = 'floating-message';
@@ -130,12 +177,9 @@
 
         const bodyWidth = window.innerWidth;
         const imageRect = image.getBoundingClientRect();
-
-        // Random font size
         const size = Math.random() * 0.8 + 1.2;
         msg.style.fontSize = `${size}rem`;
 
-        // Avoid overlapping center image
         let x;
         let safeLeft = imageRect.left - 180;
         let safeRight = imageRect.right + 180;
@@ -147,13 +191,12 @@
 
         msg.style.left = `${x}px`;
 
-        // Random pastel glow
         const colors = [
-          'rgba(255,182,193,0.9)', // pink
-          'rgba(173,216,230,0.9)', // blue
-          'rgba(221,160,221,0.9)', // lavender
-          'rgba(152,251,152,0.9)', // mint
-          'rgba(255,250,205,0.9)'  // yellow
+          'rgba(255,182,193,0.9)', 
+          'rgba(173,216,230,0.9)', 
+          'rgba(221,160,221,0.9)', 
+          'rgba(152,251,152,0.9)', 
+          'rgba(255,250,205,0.9)'
         ];
         msg.style.textShadow = `0 0 15px ${colors[Math.floor(Math.random() * colors.length)]}`;
 
@@ -161,9 +204,9 @@
         setTimeout(() => msg.remove(), 8000);
       }
 
-      // Start infinite waterfall loop (reduced density)
+      // Gentle waterfall effect
       setTimeout(() => {
-        setInterval(spawnMessage, 900); // fewer messages for soft waterfall
+        setInterval(spawnMessage, 800);
       }, 2000);
     });
   </script>
