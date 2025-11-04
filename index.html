@@ -1,260 +1,174 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday, Mom!</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary-color: #ff69b4;
-            --secondary-color: #ff9ff3;
-            --background-color: #f6e5f5;
-            --text-color: #4a4a4a;
-        }
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--background-color);
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            overflow: hidden;
-            transition: background-color 2s ease;
-        }
-        .container {
-            text-align: center;
-            background-color: rgba(255, 255, 255, 0.9);
-            padding: 3rem;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            max-width: 600px;
-            width: 90%;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .container:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
-        }
-        h1 {
-            font-family: 'Dancing Script', cursive;
-            color: var(--primary-color);
-            font-size: 3.5rem;
-            margin-bottom: 1.5rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-            animation: titleAnimation 2s ease-in-out infinite alternate;
-        }
-        @keyframes titleAnimation {
-            from { transform: scale(1); }
-            to { transform: scale(1.05); }
-        }
-        #countdown {
-            font-size: 2rem;
-            color: var(--text-color);
-            margin-bottom: 1.5rem;
-            font-weight: 600;
-            transition: color 0.3s ease;
-        }
-        #countdown:hover {
-            color: var(--primary-color);
-        }
-        #birthdayWish {
-            font-family: 'Dancing Script', cursive;
-            font-size: 2.5rem;
-            color: var(--primary-color);
-            display: none;
-            margin-bottom: 1.5rem;
-            animation: fadeIn 2s, floatAnimation 3s ease-in-out infinite;
-        }
-        @keyframes floatAnimation {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-        #momImage {
-            width: 250px;
-            height: 250px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin: 1.5rem auto;
-            display: block;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-            border: 5px solid white;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        #momImage:hover {
-            transform: scale(1.05) rotate(5deg);
-            box-shadow: 0 12px 25px rgba(0,0,0,0.3);
-        }
-        .message {
-            font-size: 1.1rem;
-            color: var(--text-color);
-            margin-bottom: 1.5rem;
-            line-height: 1.8;
-            display: none;
-            animation: fadeIn 2s;
-            transition: transform 0.3s ease;
-        }
-        .message:hover {
-            transform: scale(1.02);
-        }
-        .confetti {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background-color: var(--secondary-color);
-            animation: confetti 5s ease-in-out infinite;
-        }
-        @keyframes confetti {
-            0% { transform: translateY(0) rotate(0deg); }
-            100% { transform: translateY(100vh) rotate(720deg); }
-        }
-        .heart {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background-color: var(--primary-color);
-            transform: rotate(45deg);
-            animation: heartbeat 1s infinite;
-            display: none;
-        }
-        .heart::before,
-        .heart::after {
-            content: '';
-            width: 20px;
-            height: 20px;
-            background-color: var(--primary-color);
-            border-radius: 50%;
-            position: absolute;
-        }
-        .heart::before {
-            left: -10px;
-        }
-        .heart::after {
-            top: -10px;
-        }
-        @keyframes heartbeat {
-            0% { transform: scale(1) rotate(45deg); }
-            50% { transform: scale(1.2) rotate(45deg); }
-            100% { transform: scale(1) rotate(45deg); }
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cute Waterfall Messages</title>
+
+  <!-- Momo Signature Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Momo+Signature&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+      position: relative;
+      background: url('bg.jpg') no-repeat center center/cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      animation: fadeInBody 1.5s ease-in forwards;
+    }
+
+    @keyframes fadeInBody {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* Center image styling */
+    .center-image {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.4);
+      opacity: 0;
+      animation: popUp 2s ease-out forwards;
+      max-width: 60vw;
+      width: auto;
+      height: auto;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    @keyframes popUp {
+      0% { opacity: 0; transform: translate(-50%, -50%) scale(0.3); }
+      60% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); }
+      100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    }
+
+    /* Waterfall messages */
+    .floating-message {
+      position: absolute;
+      top: -10vh;
+      opacity: 0;
+      font-family: "Momo Signature", cursive;
+      font-size: 2rem;
+      color: white;
+      text-shadow: 0 0 8px rgba(255,255,255,0.9);
+      animation: fallDown 8s linear forwards;
+      pointer-events: none;
+      white-space: nowrap;
+      z-index: 2;
+    }
+
+    /* Waterfall downward animation */
+    @keyframes fallDown {
+      0% { transform: translateY(-10vh); opacity: 0; }
+      15% { opacity: 1; }
+      85% { opacity: 1; }
+      100% { transform: translateY(110vh); opacity: 0; }
+    }
+
+    @media (max-width: 768px) {
+      .center-image { max-width: 80vw; }
+      .floating-message { font-size: 1.5rem; }
+    }
+
+    @media (max-width: 480px) {
+      .center-image { max-width: 90vw; }
+      .floating-message { font-size: 1.2rem; }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1 id="title">Mom's Birthday Countdown</h1>
-        <div id="countdown"></div>
-        <div id="birthdayWish">Wishing You a Fantastic Day!</div>
-        <img id="momImage" src="mom2.jpg" alt="Mom's Image">
-        <p class="message">
-            Dear Mom,<br><br>
-            On this special day, we want to celebrate you and all the love and joy you bring to our lives. 
-            Your kindness, strength, and wisdom inspire us every day. 
-            May this year bring you happiness, success, and countless beautiful moments.<br><br>
-            We love you!
-        </p>
-    </div>
+  <!-- Main Image -->
+  <img src="img1.png" alt="Center Image" class="center-image" id="mainImage">
 
-    <audio id="birthdaySong" src="https://example.com/birthday-song.mp3"></audio>
+  <!-- Background Music -->
+  <audio id="bgMusic" src="song.mp3" preload="auto" loop></audio>
 
-    <script>
-        const countdownElement = document.getElementById('countdown');
-        const birthdayWishElement = document.getElementById('birthdayWish');
-        const titleElement = document.getElementById('title');
-        const messageElement = document.querySelector('.message');
-        const birthdaySong = document.getElementById('birthdaySong');
-        const momImage = document.getElementById('momImage');
+  <script>
+    window.addEventListener('load', () => {
+      const music = document.getElementById('bgMusic');
+      const image = document.getElementById('mainImage');
+      const body = document.body;
 
-        function updateCountdown() {
-            const now = new Date();
-            const birthday = new Date(now.getFullYear(), 8, 16); // September is month 8 (0-indexed)
-            birthday.setHours(0, 0, 0, 0);
+      // Try autoplay fade-in
+      music.volume = 0;
+      music.play().then(() => {
+        let vol = 0;
+        const fade = setInterval(() => {
+          if (vol < 1) {
+            vol += 0.05;
+            music.volume = vol;
+          } else clearInterval(fade);
+        }, 200);
+      }).catch(err => console.log("Autoplay blocked:", err));
 
-            if (now > birthday) {
-                birthday.setFullYear(birthday.getFullYear() + 1);
-            }
+      // Cute messages
+      const messages = [
+        "You’re my sunshine ☀️", "Love you always 💖", "Cutie pie 🧸", "Stay magical ✨",
+        "My heart belongs to you 💞", "Smiles all day 😊", "Forever yours 💫",
+        "Sweet like candy 🍬", "You’re my dream 🌙", "You make me happy 🌸",
+        "Pretty soul 🌷", "Warm cuddles 🐻", "I miss you 😘", "You’re adorable 💐",
+        "Heart full of love 💗", "Dream big 🌈", "You’re my melody 🎵",
+        "Soft heart 💕", "Always with you 🌻", "Stay cute 🐰", "Shine bright 💎",
+        "Hugs and kisses 💋", "You make me blush 🌺", "My favorite human 💞"
+      ];
 
-            const diff = birthday - now;
-            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+      // Spawn waterfall messages
+      function spawnMessage() {
+        const msg = document.createElement('div');
+        msg.className = 'floating-message';
+        msg.textContent = messages[Math.floor(Math.random() * messages.length)];
 
-            countdownElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+        const bodyWidth = window.innerWidth;
+        const imageRect = image.getBoundingClientRect();
 
-            if (diff <= 0) {
-                clearInterval(countdownInterval);
-                startCelebration();
-            }
-        }
+        // Random font size
+        const size = Math.random() * 0.8 + 1.2;
+        msg.style.fontSize = `${size}rem`;
 
-        function startCelebration() {
-            document.body.style.backgroundColor = '#ffd1dc';
-            countdownElement.style.display = 'none';
-            birthdayWishElement.style.display = 'block';
-            titleElement.textContent = 'Happy Birthday, Mom!';
-            messageElement.style.display = 'block';
-            birthdaySong.play();
-            createConfetti();
-            createHearts();
-            momImage.style.animation = 'pulse 2s infinite';
-        }
+        // Avoid overlapping center image
+        let x;
+        let safeLeft = imageRect.left - 180;
+        let safeRight = imageRect.right + 180;
+        let tries = 0;
+        do {
+          x = Math.random() * (bodyWidth - 200);
+          tries++;
+        } while (x > safeLeft && x < safeRight && tries < 30);
 
-        function createConfetti() {
-            for (let i = 0; i < 100; i++) {
-                const confetti = document.createElement('div');
-                confetti.classList.add('confetti');
-                confetti.style.left = Math.random() * 100 + 'vw';
-                confetti.style.animationDuration = Math.random() * 3 + 2 + 's';
-                confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
-                document.body.appendChild(confetti);
-            }
-        }
+        msg.style.left = `${x}px`;
 
-        function createHearts() {
-            for (let i = 0; i < 20; i++) {
-                const heart = document.createElement('div');
-                heart.classList.add('heart');
-                heart.style.left = Math.random() * 100 + 'vw';
-                heart.style.top = Math.random() * 100 + 'vh';
-                heart.style.animationDelay = Math.random() * 2 + 's';
-                document.body.appendChild(heart);
-            }
-        }
+        // Random pastel glow
+        const colors = [
+          'rgba(255,182,193,0.9)', // pink
+          'rgba(173,216,230,0.9)', // blue
+          'rgba(221,160,221,0.9)', // lavender
+          'rgba(152,251,152,0.9)', // mint
+          'rgba(255,250,205,0.9)'  // yellow
+        ];
+        msg.style.textShadow = `0 0 15px ${colors[Math.floor(Math.random() * colors.length)]}`;
 
-        const countdownInterval = setInterval(updateCountdown, 1000);
-        updateCountdown();
+        body.appendChild(msg);
+        setTimeout(() => msg.remove(), 8000); // remove after animation ends
+      }
 
-        // Check if it's already past the birthday
-        const now = new Date();
-        const birthday = new Date(now.getFullYear(), 8, 16); // September is month 8 (0-indexed)
-        birthday.setHours(0, 0, 0, 0);
-
-        if (now >= birthday) {
-            clearInterval(countdownInterval);
-            startCelebration();
-        }
-
-        // Add hover effect to mom's image
-        momImage.addEventListener('mouseover', () => {
-            momImage.style.transform = 'scale(1.1) rotate(5deg)';
-        });
-        momImage.addEventListener('mouseout', () => {
-            momImage.style.transform = 'scale(1) rotate(0deg)';
-        });
-
-        // Add a pulsing animation to the countdown
-        setInterval(() => {
-            countdownElement.style.transform = 'scale(1.05)';
-            setTimeout(() => {
-                countdownElement.style.transform = 'scale(1)';
-            }, 500);
-        }, 2000);
-    </script>
+      // Start infinite waterfall loop
+      setTimeout(() => {
+        setInterval(spawnMessage, 250); // fast flow for waterfall look
+      }, 2000);
+    });
+  </script>
 </body>
 </html>
