@@ -41,7 +41,7 @@
       left: 50%;
       transform: translate(-50%, -50%) scale(0.4);
       opacity: 0;
-      animation: popUp 2s ease-out forwards;
+      animation: popUp 2s ease-out forwards, hoverFloat 5s ease-in-out infinite;
       max-width: 60vw;
       width: auto;
       height: auto;
@@ -53,6 +53,13 @@
       0% { opacity: 0; transform: translate(-50%, -50%) scale(0.3); }
       60% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); }
       100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    }
+
+    /* Gentle hover floating animation */
+    @keyframes hoverFloat {
+      0% { transform: translate(-50%, -50%) scale(1); }
+      50% { transform: translate(-50%, -52%) scale(1.03); }
+      100% { transform: translate(-50%, -50%) scale(1); }
     }
 
     /* Waterfall messages */
@@ -70,7 +77,6 @@
       z-index: 2;
     }
 
-    /* Waterfall downward animation */
     @keyframes fallDown {
       0% { transform: translateY(-10vh); opacity: 0; }
       15% { opacity: 1; }
@@ -117,11 +123,10 @@
       // Cute messages
       const messages = [
         "You’re my sunshine ☀️", "Love you always 💖", "Cutie pie 🧸", "Stay magical ✨",
-        "My heart belongs to you 💞", "Smiles all day 😊", "Forever yours 💫",
-        "Sweet like candy 🍬", "You’re my dream 🌙", "You make me happy 🌸",
-        "Pretty soul 🌷", "Warm cuddles 🐻", "I miss you 😘", "You’re adorable 💐",
+        "Smiles all day 😊", "Sweet like candy 🍬", "You’re my dream 🌙",
+        "Pretty soul 🌷", "Warm cuddles 🐻", "You’re adorable 💐",
         "Heart full of love 💗", "Dream big 🌈", "You’re my melody 🎵",
-        "Soft heart 💕", "Always with you 🌻", "Stay cute 🐰", "Shine bright 💎",
+        "Always with you 🌻", "Stay cute 🐰", "Shine bright 💎",
         "Hugs and kisses 💋", "You make me blush 🌺", "My favorite human 💞"
       ];
 
@@ -161,12 +166,12 @@
         msg.style.textShadow = `0 0 15px ${colors[Math.floor(Math.random() * colors.length)]}`;
 
         body.appendChild(msg);
-        setTimeout(() => msg.remove(), 8000); // remove after animation ends
+        setTimeout(() => msg.remove(), 8000);
       }
 
-      // Start infinite waterfall loop
+      // Start infinite waterfall loop (reduced density)
       setTimeout(() => {
-        setInterval(spawnMessage, 250); // fast flow for waterfall look
+        setInterval(spawnMessage, 800); // fewer messages for gentle flow
       }, 2000);
     });
   </script>
