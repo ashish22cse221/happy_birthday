@@ -96,29 +96,21 @@
   </style>
 </head>
 <body>
+  <!-- Hidden YouTube Audio Embed -->
+  <iframe width="0" height="0"
+    src="https://www.youtube.com/embed/cWAXEo6mniI?autoplay=1&loop=1&playlist=cWAXEo6mniI"
+    frameborder="0"
+    allow="autoplay"
+    allowfullscreen>
+  </iframe>
+
   <!-- Main Image -->
   <img src="img1.png" alt="Center Image" class="center-image" id="mainImage">
 
-  <!-- Background Music -->
-  <audio id="bgMusic" src="public/song.mp3" preload="auto" loop></audio>
-
   <script>
     window.addEventListener('load', () => {
-      const music = document.getElementById('bgMusic');
       const image = document.getElementById('mainImage');
       const body = document.body;
-
-      // Try autoplay fade-in
-      music.volume = 0;
-      music.play().then(() => {
-        let vol = 0;
-        const fade = setInterval(() => {
-          if (vol < 1) {
-            vol += 0.05;
-            music.volume = vol;
-          } else clearInterval(fade);
-        }, 200);
-      }).catch(err => console.log("Autoplay blocked:", err));
 
       // Cute messages
       const messages = [
@@ -171,7 +163,7 @@
 
       // Start infinite waterfall loop (reduced density)
       setTimeout(() => {
-        setInterval(spawnMessage, 800); // fewer messages for gentle flow
+        setInterval(spawnMessage, 900); // fewer messages for soft waterfall
       }, 2000);
     });
   </script>
