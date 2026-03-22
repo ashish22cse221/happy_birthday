@@ -123,7 +123,7 @@
 
     @media (max-width: 768px) {
       .center-image {
-        max-width: 150vw;
+        max-width: 90vw;
         transform: translate(-50%, -50%) scale(0.6);
       }
       .floating-message { font-size: 1.2rem; }
@@ -132,7 +132,7 @@
 
     @media (max-width: 480px) {
       .center-image {
-        max-width: 120vw;
+        max-width: 95vw;
         transform: translate(-50%, -50%) scale(0.7);
       }
       .floating-message { font-size: 1rem; }
@@ -150,8 +150,8 @@
     <span>🎵</span>
   </div>
 
-  <!-- Background Music -->
-  <audio id="bgMusic" src="public/song.mp3" preload="auto" loop></audio>
+  <!-- Background Music — path: song.mp3 sits next to index.html -->
+  <audio id="bgMusic" src="song.mp3" preload="auto" loop></audio>
 
   <script>
     window.addEventListener('load', () => {
@@ -161,17 +161,42 @@
       const musicBtn = document.getElementById('musicBtn');
       let isPlaying  = false;
 
+      // Log any load errors so you can see them in DevTools console
+      music.addEventListener('error', () => {
+        console.error('Audio failed to load. Check that song.mp3 is in the same folder as index.html.');
+        musicBtn.title = 'Audio file not found';
+      });
+
+      function startMusic() {
+        music.play().then(() => {
+          musicBtn.innerHTML = "<span>🎶</span>";
+          isPlaying = true;
+        }).catch(err => {
+          console.warn("Play failed:", err);
+        });
+      }
+
+      // Try to play on the very first user interaction anywhere on the page
+      // (works around browser autoplay restrictions)
+      function onFirstInteraction() {
+        if (!isPlaying) startMusic();
+        document.removeEventListener('click', onFirstInteraction);
+        document.removeEventListener('keydown', onFirstInteraction);
+        document.removeEventListener('touchstart', onFirstInteraction);
+      }
+      document.addEventListener('click', onFirstInteraction);
+      document.addEventListener('keydown', onFirstInteraction);
+      document.addEventListener('touchstart', onFirstInteraction);
+
       // Music Button Toggle
-      musicBtn.addEventListener('click', () => {
+      musicBtn.addEventListener('click', (e) => {
+        e.stopPropagation(); // handled separately above on first play
         if (isPlaying) {
           music.pause();
           musicBtn.innerHTML = "<span>🔇</span>";
           isPlaying = false;
         } else {
-          music.play().then(() => {
-            musicBtn.innerHTML = "<span>🎶</span>";
-            isPlaying = true;
-          }).catch(err => console.log("Autoplay blocked:", err));
+          startMusic();
         }
       });
 
